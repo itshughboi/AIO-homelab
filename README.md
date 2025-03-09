@@ -11,7 +11,7 @@ sudo nano /etc/systemd/resolved.conf
 ```
 5. Change permissions on acme.json
 ```
-chmod /traefik/acme.json to 600
+chmod 600 ./traefik/acme.json
 ```
 7. Enter cloudflare API token into cf-token file. This should have read/write permissions for domain
 8. Fill out .env
