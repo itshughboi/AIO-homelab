@@ -134,9 +134,9 @@ services:
         ipv4_address: 172.70.9.3
       proxy:
     environment:
-      TZ: 'America/Denver'
+      TZ: '{$HOST_TZ}'
       # Set a password to access the web interface. Not setting one will result in a random password being assigned
-      FTLCONF_webserver_api_password: '7544162Sh'
+      FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD}
       # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'3
       FTLCONF_dns_listeningMode: 'all'
       FTLCONF_dns_upstreams: '172.70.9.2#5053'
@@ -320,7 +320,7 @@ services:
     networks:
       proxy:
     environment:
-      - TZ=America/Denver
+      - TZ={$HOST_TZ}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gotify.entrypoints=http"
@@ -412,7 +412,7 @@ services:
     #group_add:
     #  - '109'  # This needs to be the group id of running `stat -c '%g' /dev/dri/renderD128` on the docker host
     environment:
-      - TZ=America/Denver
+      - TZ={$HOST_TZ}
     volumes:
       - ${WORKING_DIR}/jellyfin/config:/config
       - ${WORKING_DIR}/jellyfin/cache:/cache
@@ -509,7 +509,7 @@ services:
         --keep-daily 7
         --keep-weekly 5
         --keep-monthly 12
-      TZ: America/Denver
+      TZ: {$HOST_TZ}
     volumes:
     # this will store locally
       - ${WORKING_DIR}/restic:/restic
@@ -531,7 +531,7 @@ services:
       PRUNE_CRON: "0 0 4 * * *"
       RESTIC_REPOSITORY: /restic
       RESTIC_PASSWORD: ${RESTIC_PASSWORD}
-      TZ: America/Denver
+      TZ: {$HOST_TZ}
     security_opt:
       - no-new-privileges:true
 
@@ -546,7 +546,7 @@ services:
         --read-data-subset=10%
       RESTIC_REPOSITORY: /restic
       RESTIC_PASSWORD: ${RESTIC_PASSWORD}
-      TZ: America/Denver
+      TZ: {$HOST_TZ}
     security_opt:
       - no-new-privileges:true
 
