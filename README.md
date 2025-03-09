@@ -1,6 +1,6 @@
 # AIO-homelab
 
-1. Git clone repository ```'git clone https://github.com/itshughboi/AIO-homelab.git'''
+1. Git clone repository // git clone https://github.com/itshughboi/AIO-homelab.git
 2. Disable STUB resolver for Ubuntu
 3. chmod /traefik/acme.json to 600
 4. Enter cloudflare API token into cf-token file. This should have read/write permissions for domain
