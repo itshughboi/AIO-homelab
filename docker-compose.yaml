@@ -43,13 +43,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
-      - "traefik.http.routers.traefik.rule=Host(`traefik-docker.$DOMAIN`)"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.$DOMAIN`)"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
       - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
       - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
       - "traefik.http.routers.traefik-secure.entrypoints=https"
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik-docker.$DOMAIN`)"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.$DOMAIN`)"
       - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls=true"
       - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
@@ -134,7 +134,7 @@ services:
         ipv4_address: 172.70.9.3
       proxy:
     environment:
-      TZ: '{$HOST_TZ}'
+      TZ: ${HOST_TZ}
       # Set a password to access the web interface. Not setting one will result in a random password being assigned
       FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD}
       # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'3
@@ -155,11 +155,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pihole.entrypoints=http"
-      - "traefik.http.routers.pihole.rule=Host(`piholev6.$DOMAIN`)"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.$DOMAIN`)"
       - "traefik.http.middlewares.pihole-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.pihole.middlewares=pihole-https-redirect"
       - "traefik.http.routers.pihole-secure.entrypoints=https"
-      - "traefik.http.routers.pihole-secure.rule=Host(`piholev6.$DOMAIN`)"
+      - "traefik.http.routers.pihole-secure.rule=Host(`pihole.$DOMAIN`)"
       - "traefik.http.routers.pihole-secure.tls=true"
       - "traefik.http.routers.pihole-secure.service=pihole"
       - "traefik.http.services.pihole.loadbalancer.server.port=80"
@@ -320,7 +320,7 @@ services:
     networks:
       proxy:
     environment:
-      - TZ={$HOST_TZ}
+      - TZ=${HOST_TZ}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.gotify.entrypoints=http"
@@ -509,7 +509,7 @@ services:
         --keep-daily 7
         --keep-weekly 5
         --keep-monthly 12
-      TZ: {$HOST_TZ}
+      TZ: ${HOST_TZ}
     volumes:
     # this will store locally
       - ${WORKING_DIR}/restic:/restic
@@ -531,7 +531,7 @@ services:
       PRUNE_CRON: "0 0 4 * * *"
       RESTIC_REPOSITORY: /restic
       RESTIC_PASSWORD: ${RESTIC_PASSWORD}
-      TZ: {$HOST_TZ}
+      TZ: ${HOST_TZ}
     security_opt:
       - no-new-privileges:true
 
@@ -546,7 +546,7 @@ services:
         --read-data-subset=10%
       RESTIC_REPOSITORY: /restic
       RESTIC_PASSWORD: ${RESTIC_PASSWORD}
-      TZ: {$HOST_TZ}
+      TZ: ${HOST_TZ}
     security_opt:
       - no-new-privileges:true
 
